@@ -1,3 +1,17 @@
+locals {
+  content_type_map = {
+    html = "text/html",
+    js = "application/javascript",
+    css = "text/css",
+    svg = "image/svg+xml",
+    jpg = "image/jpeg",
+    ico = "image/x-icon",
+    png = "image/png",
+    gif = "image/gif",
+    pdf = "application/pdf"
+  }
+}
+
 resource "random_string" "bucket_name" {
   length  = 12
   upper   = false
@@ -44,10 +58,10 @@ resource "aws_s3_bucket_object" "b" {
   for_each     = fileset(var.content_path, "content/*")
   bucket       = aws_s3_bucket.b.id
   key          = replace(each.value, "content/", "")
-  content_type = "text/html"
+  content_type = lookup(local.content_type_map, regex("\\.(?P<extension>[A-Za-z0-9]+)$", each.value).extension, "application/octet-stream")
   source       = each.value
   etag         = filemd5(each.value)
-  depends_on = [
+  depends_on   = [
     aws_s3_bucket.b
   ]
 }
