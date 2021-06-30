@@ -3,3 +3,6 @@ provider.tf
 *.tfstate.*
 *.lock.hcl
 .terraform
+tfplan
+go.mod
+go.sum
