@@ -24,11 +24,12 @@ module "static-web-site" {
 ```
 ### Test
 ```bash
-export PARAMETERS="--terragrunt-working-dir ./test --terragrunt-non-interactive -auto-approve"
 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-terragrunt apply $PARAMETERS
-# retrieve the website endpoint
-terraform -chdir=./test output s3_bucket_website_endpoint
-terragrunt destroy $PARAMETERS
+export AWS_REGION=$AWS_REGION
+cd test
+go mod init terraform-static-website-test
+go mod tidy -v
+go get .
+go test -v
 ```
