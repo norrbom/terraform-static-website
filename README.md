@@ -1,4 +1,10 @@
 ## Terraform module for hosting a static website on AWS S3
+
+### Prerequisites
+
+* terraform 1
+* go 1.16 or greater
+
 ### Example usage
 
 Directory structure
