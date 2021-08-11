@@ -11,14 +11,15 @@ Directory structure
 ```bash
 .
 ├── content
-│   ├── error.html
-│   └── index.html
+│   ├── error.html
+│   └── index.html
 ├── main.tf
 ```
 main.tf
 ```terraform
 module "static-web-site" {
-  source       = "../"
+  source       = "norrbom/website/static"
+  version      = "0.3.6"
   bucket       = "environment.myproject"
   policy       = {
     "Effect" = "Allow"
