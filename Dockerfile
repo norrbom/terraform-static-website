@@ -1,6 +1,6 @@
 FROM golang:1.16-alpine3.14
 
-ENV TERRAFORM_VERSION=0.14.11
+ENV TERRAFORM_VERSION=1.0.4
 
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh build-base
