@@ -30,13 +30,14 @@ module "static-web-site" {
 }
 ```
 ### Test
+Requires Go and Terraform
 ```bash
 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 export AWS_REGION=$AWS_REGION
 ./test/run.sh
 ```
-#### with Docker
+Requires Docker
 ```bash
 docker build -t terratest . && \
 docker run --rm -it -v ${PWD}:/go/src \
