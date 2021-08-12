@@ -34,9 +34,15 @@ module "static-web-site" {
 export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 export AWS_REGION=$AWS_REGION
-cd test
-go mod init terraform-static-website-test
-go mod tidy -v
-go get .
-go test -v
+./test/run.sh
+```
+#### with Docker
+```bash
+docker build -t terratest . && \
+docker run --rm -it -v ${PWD}:/go/src \
+-e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+-e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+-e AWS_REGION=$AWS_REGION \
+terratest \
+sh /go/src/test/run.sh
 ```
