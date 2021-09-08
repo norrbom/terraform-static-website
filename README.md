@@ -27,6 +27,7 @@ module "static-web-site" {
     "Action" = "s3:GetObject"
   }
   policy_allowed_source_ip =["0.0.0.0/0"] # open to Internet
+  logs_expiration_days = 180
 }
 ```
 ### Test
