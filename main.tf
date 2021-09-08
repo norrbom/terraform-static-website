@@ -30,7 +30,7 @@ resource "random_string" "bucket_name" {
 }
 
 resource "aws_s3_bucket" "log_bucket" {
-  bucket = var.bucket != null ? var.bucket : "log-bucket-${random_string.bucket_name.result}"
+  bucket = var.bucket != null ? "log-bucket-${var.bucket}" : "log-bucket-${random_string.bucket_name.result}"
   acl    = "log-delivery-write"
 }
 
