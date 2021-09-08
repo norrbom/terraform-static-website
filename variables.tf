@@ -31,7 +31,7 @@ variable "policy_allowed_source_ip" {
 }
 
 variable "logs_expiration_days" {
-  type = number
-  description = "Nuber of days before log objects in the log bucket will be expired"
-  default = 90
+  type        = number
+  description = "Number of days before log objects in the log bucket will be expired"
+  default     = 90
 }
