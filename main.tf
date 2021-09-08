@@ -34,6 +34,20 @@ resource "aws_s3_bucket" "log_bucket" {
   acl    = "log-delivery-write"
 }
 
+resource "aws_s3control_bucket_lifecycle_configuration" "logs_life_cycle_rules" {
+  bucket = aws_s3_bucket.log_bucket.arn
+
+  rule {
+    expiration {
+      days = var.logs_expiration_days
+    }
+    filter {
+      prefix = "logs/"
+    }
+    id = "logs expiration"
+  }
+}
+
 resource "aws_s3_bucket" "b" {
   bucket = var.bucket != null ? var.bucket : "static-website-${random_string.bucket_name.result}"
   acl    = var.acl

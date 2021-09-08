@@ -29,3 +29,9 @@ variable "policy_allowed_source_ip" {
   description = "Constrain access to a list of source IP"
   default     = []
 }
+
+variable "logs_expiration_days" {
+  type = number
+  description = "Nuber of days before log objects in the log bucket will be expired"
+  default = 90
+}
