@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
 locals {
   content_type_map = {
     html = "text/html",
@@ -20,6 +29,11 @@ resource "random_string" "bucket_name" {
   special = false
 }
 
+resource "aws_s3_bucket" "log_bucket" {
+  bucket = var.bucket != null ? "log-bucket-${var.bucket}" : "log-bucket-${random_string.bucket_name.result}"
+  acl    = "log-delivery-write"
+}
+
 resource "aws_s3_bucket" "b" {
   bucket = var.bucket != null ? var.bucket : "static-website-${random_string.bucket_name.result}"
   acl    = var.acl
@@ -27,6 +41,10 @@ resource "aws_s3_bucket" "b" {
   website {
     index_document = "index.html"
     error_document = "error.html"
+  }
+  logging {
+    target_bucket = aws_s3_bucket.log_bucket.id
+    target_prefix = "logs/"
   }
 }
 
