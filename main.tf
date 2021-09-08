@@ -32,19 +32,14 @@ resource "random_string" "bucket_name" {
 resource "aws_s3_bucket" "log_bucket" {
   bucket = var.bucket != null ? "log-bucket-${var.bucket}" : "log-bucket-${random_string.bucket_name.result}"
   acl    = "log-delivery-write"
-}
 
-resource "aws_s3control_bucket_lifecycle_configuration" "logs_life_cycle_rules" {
-  bucket = aws_s3_bucket.log_bucket.arn
-
-  rule {
+  lifecycle_rule {
+    id      = "logs"
+    enabled = true
+    prefix  = "logs/"
     expiration {
       days = var.logs_expiration_days
     }
-    filter {
-      prefix = "logs/"
-    }
-    id = "logs expiration"
   }
 }
 
